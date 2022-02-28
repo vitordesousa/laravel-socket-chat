@@ -17,5 +17,10 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [PageController::class, 'welcome'])->name('welcome');
-Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard')->middleware(['auth:sanctum', 'verified']);
 
+
+
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function(){
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/chat', [PageController::class, 'chat'])->name('chat');
+});
