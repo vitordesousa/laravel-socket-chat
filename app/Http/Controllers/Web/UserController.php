@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Group;
+use App\Models\Conversation;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
 	public function index(){
-		$userGroup = Group::where('name', 'Users')->first();
-		$users = User::select('id', 'name')->where('group_id', $userGroup->id)->get();
+
+		$userLogged = auth()->user();
+		$conversations = Conversation::with('customer:id,name')->where('emplooyer_id', $userLogged->id)->get();
+
 		return response()->json([
-			'users' => $users,
+			'conversations' => $conversations,
 		], Response::HTTP_OK);
 	}
 }
