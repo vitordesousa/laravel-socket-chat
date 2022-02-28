@@ -12,78 +12,20 @@
                     <div class="flex" style="height: 40rem">
 						<div class="users-list w-3/12 bg-gray-200 bg-opacity-25 border-r border-gray-200 overflow-y-auto">
 							<ul>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
+								<li
+								 v-for="user in users" :key="user.id"
+								 class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
 									<p class="flex items-center">
-										User 1
+										{{user.name}}
 										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
 									</p>
 								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 2
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 1
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
+								<!-- <li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
 									<p class="flex items-center">
 										User 2
 										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
 									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 1
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 2
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 1
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 2
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 1
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 2
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 1
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
-								<li class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-									<p class="flex items-center">
-										User 2
-										<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-									</p>
-								</li>
+								</li> -->
 							</ul>
 						</div>
 						<div class="conversation w-9/12 flex flex-col justify-between">
@@ -210,6 +152,16 @@
         components: {
             AppLayout,
         },
+		data(){
+			return {
+				users : [],
+			}
+		},
+		mounted(){
+			axios.get('/api/users').then(response => {
+				this.users = response.data.users
+			})
+		}
     })
 </script>
 <style>
