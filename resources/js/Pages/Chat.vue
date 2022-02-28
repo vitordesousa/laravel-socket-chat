@@ -25,16 +25,15 @@
 						</div>
 						<div class="conversation w-9/12 flex flex-col justify-between">
 							<div class="w-full p-6 flex flex-col  overflow-y-auto">
-
 								<div 
 									v-for="message in messages" :key="message.id"
-									class="w-full mb-3 text-right">
-										<p class="inline-block p-2 rounded-md max-w-7xl messageFromMe">
+									:class="(message.user_id == $page.props.auth.user.id) ? 'text-right' : ''"
+									class="w-full mb-3">
+										<p :class="(message.user_id == $page.props.auth.user.id) ? 'messageFromMe' : 'messageToMe'" class="inline-block p-2 rounded-md max-w-7xl">
 											{{message.message}}
 										</p>
 										<span class="block mt-1 text-xs text-gray-500 message-time">{{message.created_at}}</span>
-								</div>
-								
+								</div>								
 							</div>
 
 							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 ">
@@ -75,6 +74,7 @@
 			}
 		},
 		mounted(){
+
 			axios.get('/api/users').then(response => {
 				this.conversations = response.data.conversations
 			})

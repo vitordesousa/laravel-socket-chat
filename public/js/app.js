@@ -26741,13 +26741,10 @@ var _hoisted_11 = {
   "class": "w-full p-6 flex flex-col overflow-y-auto"
 };
 var _hoisted_12 = {
-  "class": "inline-block p-2 rounded-md max-w-7xl messageFromMe"
-};
-var _hoisted_13 = {
   "class": "block mt-1 text-xs text-gray-500 message-time"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form w-full bg-gray-100 p-6 border-t border-gray-200"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
   "class": ""
@@ -26791,15 +26788,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.messages, function (message) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           key: message.id,
-          "class": "w-full mb-3 text-right"
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.message), 1
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([message.user_id == _ctx.$page.props.auth.user.id ? 'text-right' : '', "w-full mb-3"])
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([message.user_id == _ctx.$page.props.auth.user.id ? 'messageFromMe' : 'messageToMe', "inline-block p-2 rounded-md max-w-7xl"])
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.message), 3
+        /* TEXT, CLASS */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.created_at), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.created_at), 1
-        /* TEXT */
-        )]);
+        )], 2
+        /* CLASS */
+        );
       }), 128
       /* KEYED_FRAGMENT */
-      ))]), _hoisted_14])])])])])];
+      ))]), _hoisted_13])])])])])];
     }),
     _: 1
     /* STABLE */
