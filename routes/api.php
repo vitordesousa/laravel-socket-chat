@@ -31,8 +31,6 @@ Route::group(['prefix' => 'admin'], function(){
 });
 
 Route::group(['prefix' => 'panel'], function(){
-    Route::get('/conversations', [UserController::class, 'user_index']);
-
     Route::get('/messages', [MessageController::class, 'user_index']);
-    Route::post('/messages', [MessageController::class, 'store']);
+    Route::post('/messages', [MessageController::class, 'user_store']);
 });

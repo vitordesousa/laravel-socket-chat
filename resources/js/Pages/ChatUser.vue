@@ -26,7 +26,7 @@
 								</div>								
 							</div>
 
-							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 " v-show="userActive != ''">
+							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 ">
 								<form v-on:submit.prevent="sendMessage">
 									<div class="rounded-md flex overflow-hidden border-gray-300">
 										<input v-model="message" type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
@@ -84,11 +84,13 @@
 				this.headerMessage = `Conversa com "${this.messages[0].conversation.emplooyer.name}"`
 			})
 
-			this.scrollToBottom()		
+			this.scrollToBottom()
 
-			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', (e) => {
-				console.log('e', e)
+			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', async(e) => {
+				await this.messages.push(e.message)
+				this.scrollToBottom()
 			})
+
 		}
     })
 </script>

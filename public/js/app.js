@@ -22979,9 +22979,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     axios.get('/api/admin/conversations').then(function (response) {
       _this3.conversations = response.data.conversations;
     });
-    Echo["private"]("user.".concat(this.$page.props.auth.user.id)).listen('.SendMessage', function (e) {
-      console.log('e', e);
-    });
+    Echo["private"]("user.".concat(this.$page.props.auth.user.id)).listen('.SendMessage', /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(e) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this3.userActive && _this3.userActive == e.message.user_id)) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _context3.next = 3;
+                return _this3.messages.push(e.message);
+
+              case 3:
+                _this3.scrollToBottom();
+
+                _context3.next = 6;
+                break;
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
   }
 }));
 
@@ -23061,12 +23090,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context2.next = 2;
+              _context3.next = 2;
               return axios.get("/api/panel/messages").then(function (response) {
                 _this2.messages = response.data.messages;
                 _this2.headerMessage = "Conversa com \"".concat(_this2.messages[0].conversation.emplooyer.name, "\"");
@@ -23075,16 +23104,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               _this2.scrollToBottom();
 
-              Echo["private"]("user.".concat(_this2.$page.props.auth.user.id)).listen('.SendMessage', function (e) {
-                console.log('e', e);
-              });
+              Echo["private"]("user.".concat(_this2.$page.props.auth.user.id)).listen('.SendMessage', /*#__PURE__*/function () {
+                var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                    while (1) {
+                      switch (_context2.prev = _context2.next) {
+                        case 0:
+                          _context2.next = 2;
+                          return _this2.messages.push(e.message);
+
+                        case 2:
+                          _this2.scrollToBottom();
+
+                        case 3:
+                        case "end":
+                          return _context2.stop();
+                      }
+                    }
+                  }, _callee2);
+                }));
+
+                return function (_x) {
+                  return _ref.apply(this, arguments);
+                };
+              }());
 
             case 4:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   }
 }));
@@ -27093,7 +27143,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+      ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
         onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return _ctx.sendMessage && _ctx.sendMessage.apply(_ctx, arguments);
         }, ["prevent"]))
@@ -27114,9 +27164,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , _hoisted_13)])], 32
       /* HYDRATE_EVENTS */
-      )], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.userActive != '']])])])])])])];
+      )])])])])])])];
     }),
     _: 1
     /* STABLE */
@@ -28479,7 +28527,6 @@ _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -28501,9 +28548,11 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "ace432b287cf2f0bed390f8ac4a92213",
   cluster: "mt1",
-  forceTLS: process.env.LARAVEL_WEBSOCKETS_USE_TLS,
+  forceTLS: false,
+  //forceTLS: process.env.LARAVEL_WEBSOCKETS_USE_TLS,
   wsHost: window.location.hostname,
-  wsPort: 6001
+  wsPort: 6001 //enabledTransports: ['ws', 'wss'] 
+
 });
 
 /***/ }),

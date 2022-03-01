@@ -26,7 +26,6 @@ class SendMessage implements ShouldBroadcast
     {
         $this->message = $message;
         $this->to = $to;
-        //
     }
 
     /**

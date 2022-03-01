@@ -106,8 +106,14 @@
 				this.conversations = response.data.conversations
 			})
 
-			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', (e) => {
-				console.log('e', e)
+			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', async (e) => {
+
+				if(this.userActive && this.userActive == e.message.user_id){
+					await this.messages.push(e.message)
+					this.scrollToBottom()
+				} else {
+
+				}
 			})
 		}
     })

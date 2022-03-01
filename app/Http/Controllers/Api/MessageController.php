@@ -47,14 +47,56 @@ class MessageController extends Controller
 
 	public function store(MessageStoreRequest $request){
 	   
-		$conversation = Conversation::findOrfail($request->conversation_id);
 
-		if(!$conversation || $conversation->status > 1){
-			return response()->json([], Response::HTTP_UNAUTHORIZED);
+		try {			
+			$conversation = Conversation::findOrfail($request->conversation_id);
+
+			if(!$conversation || $conversation->status > 1){
+				return response()->json([], Response::HTTP_UNAUTHORIZED);
+			}
+			
+			$userLogged = auth()->user();
+			
+			$request['user_id'] = $userLogged->id;
+			$request['message']	= e($request->message);
+
+			$message = Message::create($request->only('message', 'user_id', 'conversation_id'));
+
+			$to = $conversation->customer_id == $userLogged->id ? $conversation->emplooyer_id : $conversation->customer_id;
+
+			Event::dispatch(new SendMessage($message, $to));
+
+			return response()->json(['message' => $message], Response::HTTP_OK);
+
+		} catch (\Exception $e) {
+			Log::error($e->getMessage(), [
+				'getLine'		=>  $e->getLine(),
+				'getFile'		=>	$e->getFile(),
+				'getMessage'	=>	$e->getMessage()
+			]);
+
+			return response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
+
+	}
+
+
+	public function user_store(Request $request){	   
 
 		try {
 			$userLogged = auth()->user();
+			
+			if(!isset($request->conversation_id) && $userLogged->group->name == 'Administrators'){
+				return response()->json([], Response::HTTP_UNAUTHORIZED);
+			}
+			
+			$conversation = Conversation::where([ ['customer_id', '=', $userLogged->id], ['status', '<', 2] ])->first();
+			
+			if(!$conversation || $conversation->status > 1){
+				return response()->json([], Response::HTTP_UNAUTHORIZED);
+			}
+			
+			$request['conversation_id'] = $conversation->id;
 			$request['user_id'] = $userLogged->id;
 			$request['message']	= e($request->message);
 
