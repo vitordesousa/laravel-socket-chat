@@ -1,64 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+# Laravel Chat (in development)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### TODO:
+- [ ] User start conversation
+- [ ] Add user to group "users" when register
+- [ ] User end conversation (and set status 2 or 3 (*depends: read CreateConversationsTable*))
+- [ ] When user start conversation, show on administrator screen has user waiting to be attended
+- [ ] Admin catch user needing to start conversation
+- [ ] All unread messages with dot confirmation when refresh window
+- [ ] Remove login from Controllers
+- [ ] Refactor Vue Chat Component
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Made with:
+- [Laravel 9](https://laravel.com) <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="80" valign="top"></a>
+- [Vue 3](https://vuejs.org)
+- [Inertia JS](https://inertiajs.com)
+- [Laravel Websockets](https://beyondco.de/docs/laravel-websockets/getting-started/introduction)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Followed tutorial:
+[Gustavo Web](https://www.youtube.com/watch?v=HumFv2NAQnU&list=PLBRCgwXk28ixXJEKlWaoUuG38rJAod0AP)
 
-## Learning Laravel
+### Local deploy
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+*Composer* ```composer install```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*Run migrates:* ```php artisan migrate```
 
-## Laravel Sponsors
+When run migrates, users will be create, 2 administrators and 8 users with respective access:
+```admin@admin.com``` ```password```
+```admin2@admin.com``` ```password```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```user1@user.com``` ```password```
+```user2@user.com``` ```password```
+```user3@user.com``` ```password```
+```user4@user.com``` ```password```
+```user5@user.com``` ```password```
+```user6@user.com``` ```password```
+```user7@user.com``` ```password```
+```user8@user.com``` ```password```
 
-### Premium Partners
+```npm run dev```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```composer install```
 
-## Contributing
+*To Laravel:* ```php artisan serve```
+*To WebSockets (in another prompt tab):*  ```php artisan websockets:serve```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+##### License
+[MIT license](https://opensource.org/licenses/MIT).
