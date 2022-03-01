@@ -22886,7 +22886,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       conversations: [],
       messages: [],
-      userActive: ''
+      conversation: '',
+      userActive: '',
+      message: ''
     };
   },
   methods: {
@@ -22896,14 +22898,28 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/messages/".concat(conversationId, "/").concat(userId)).then(function (response) {
         _this.messages = response.data.messages;
         _this.userActive = userId;
+        _this.conversation = conversationId;
+      });
+    },
+    sendMessage: function sendMessage(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      axios.post('/api/messages', {
+        'message': this.message,
+        'conversation_id': this.conversation
+      }).then(function (response) {
+        _this2.messages.push(response.data.message);
+
+        _this2.message = '';
       });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     axios.get('/api/users').then(function (response) {
-      _this2.conversations = response.data.conversations;
+      _this3.conversations = response.data.conversations;
     });
   }
 }));
@@ -26748,21 +26764,17 @@ var _hoisted_12 = {
 var _hoisted_13 = {
   "class": "form w-full bg-gray-100 p-6 border-t border-gray-200"
 };
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_14 = {
   "class": "rounded-md flex overflow-hidden border-gray-300"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "message",
-  "class": "flex-1 px-4 py-2 text-sm focus:outiline-none"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2",
   type: "submit"
-}, "Enviar")])], -1
+}, "Enviar", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = [_hoisted_14];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
@@ -26802,7 +26814,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, _hoisted_15, 512
+      ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return _ctx.sendMessage && _ctx.sendMessage.apply(_ctx, arguments);
+        }, ["prevent"]))
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return _ctx.message = $event;
+        }),
+        type: "text",
+        name: "message",
+        "class": "flex-1 px-4 py-2 text-sm focus:outiline-none"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.message]]), _hoisted_15])], 32
+      /* HYDRATE_EVENTS */
+      )], 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.userActive != '']])])])])])])];
     }),

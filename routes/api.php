@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([], function(){
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/messages/{conversation:id}/{customer:id}', [MessageController::class, 'index']);
+    Route::post('/messages', [MessageController::class, 'store']);
 });

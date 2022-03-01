@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('emplooyer_id')->nullable();
             $table->foreign('emplooyer_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->tinyInteger('status')->default(0)->comment('0 - aguardando funcionário, 1 - em andamento, 2 - finalizado');
+            $table->tinyInteger('status')->default(0)->comment('0 - aguardando funcionário, 1 - em andamento, 2 - finalizado pelo usuário, 3 - finalizado por inatividade do cliente');
 
             $table->timestamps();
         });

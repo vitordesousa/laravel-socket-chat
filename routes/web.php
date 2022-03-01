@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\PageController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------

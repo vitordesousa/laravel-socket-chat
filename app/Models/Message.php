@@ -17,10 +17,9 @@ class Message extends Model
      * @var string[]
      */
     protected $fillable = [
-        'group_id',
-        'name',
-        'email',
-        'password',
+        'message',
+        'user_id',
+        'conversation_id',
     ];
 
     

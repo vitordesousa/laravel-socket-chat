@@ -38,9 +38,9 @@
 							</div>
 
 							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 " v-show="userActive != ''">
-								<form>
+								<form v-on:submit.prevent="sendMessage">
 									<div class="rounded-md flex overflow-hidden border-gray-300">
-										<input type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
+										<input v-model="message" type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
 										<button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2" type="submit">Enviar</button>
 									</div>
 								</form>
@@ -65,7 +65,9 @@
 			return {
 				conversations : [],
 				messages : [],
-				userActive : ''
+				conversation: '',
+				userActive : '',
+				message : ''
 			}
 		},
 		methods: {
@@ -73,8 +75,21 @@
 				axios.get(`/api/messages/${conversationId}/${userId}`).then(response => {
 					this.messages = response.data.messages
 					this.userActive = userId
+					this.conversation = conversationId
 				})
-			}
+			},
+
+			sendMessage(e){
+				e.preventDefault();
+				
+				axios.post('/api/messages', {
+					'message' 			:	this.message,
+					'conversation_id'	:	this.conversation
+				}).then(response => {
+					this.messages.push(response.data.message)
+					this.message = ''
+				})
+			},
 		},
 		mounted(){
 
