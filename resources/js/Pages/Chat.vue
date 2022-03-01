@@ -19,7 +19,7 @@
 									class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
 										<p class="flex items-center">
 											{{conversation.customer.name}}
-											<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
+											<span v-if="conversation.notification" class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
 										</p>
 								</li>
 							</ul>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
+    import { defineComponent, ref, watchEffect } from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
 
     export default defineComponent({
@@ -84,6 +84,15 @@
 				})
 
 				this.scrollToBottom()
+				
+				const conversation = this.conversations.find((conversation) => userId == conversation.customer_id)
+				if(!conversation){
+					return false;
+				}
+
+				watchEffect(() => {
+					conversation.notification = false
+				})
 			},
 
 			async sendMessage(e){
@@ -101,17 +110,25 @@
 			},
 		},
 		mounted(){
-
 			axios.get('/api/admin/conversations').then(response => {
 				this.conversations = response.data.conversations
 			})
 
 			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', async (e) => {
-
+				console.log(e)
 				if(this.userActive && this.userActive == e.message.user_id){
 					await this.messages.push(e.message)
 					this.scrollToBottom()
 				} else {
+					const conversation = this.conversations.find((conversation) => e.message.user_id == conversation.customer_id)
+					console.log('conversation', conversation)
+					if(!conversation){
+						return false;
+					}
+
+					watchEffect(() => {
+						conversation.notification = true
+					})
 
 				}
 			})

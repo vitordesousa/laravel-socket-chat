@@ -22920,6 +22920,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var conversation;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -22934,7 +22935,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 _this.scrollToBottom();
 
-              case 3:
+                conversation = _this.conversations.find(function (conversation) {
+                  return userId == conversation.customer_id;
+                });
+
+                if (conversation) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", false);
+
+              case 6:
+                (0,vue__WEBPACK_IMPORTED_MODULE_1__.watchEffect)(function () {
+                  conversation.notification = false;
+                });
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -22981,25 +22998,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
     Echo["private"]("user.".concat(this.$page.props.auth.user.id)).listen('.SendMessage', /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(e) {
+        var conversation;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                console.log(e);
+
                 if (!(_this3.userActive && _this3.userActive == e.message.user_id)) {
-                  _context3.next = 6;
+                  _context3.next = 7;
                   break;
                 }
 
-                _context3.next = 3;
+                _context3.next = 4;
                 return _this3.messages.push(e.message);
 
-              case 3:
+              case 4:
                 _this3.scrollToBottom();
 
-                _context3.next = 6;
+                _context3.next = 12;
                 break;
 
-              case 6:
+              case 7:
+                conversation = _this3.conversations.find(function (conversation) {
+                  return e.message.user_id == conversation.customer_id;
+                });
+                console.log('conversation', conversation);
+
+                if (conversation) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                return _context3.abrupt("return", false);
+
+              case 11:
+                (0,vue__WEBPACK_IMPORTED_MODULE_1__.watchEffect)(function () {
+                  conversation.notification = true;
+                });
+
+              case 12:
               case "end":
                 return _context3.stop();
             }
@@ -26960,13 +26998,10 @@ var _hoisted_7 = ["onClick"];
 var _hoisted_8 = {
   "class": "flex items-center"
 };
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_9 = {
+  key: 0,
   "class": "ml-2 w-2 h-2 bg-blue-400 rounded-full"
-}, null, -1
-/* HOISTED */
-);
-
+};
 var _hoisted_10 = {
   "class": "conversation w-9/12 flex flex-col justify-between"
 };
@@ -27004,7 +27039,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_ctx.userActive && _ctx.userActive != '' && _ctx.userActive == conversation.customer.id ? 'bg-gray-200 bg-opacity-50' : '', "p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200"])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(conversation.customer.name) + " ", 1
         /* TEXT */
-        ), _hoisted_9])], 10
+        ), conversation.notification ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 10
         /* CLASS, PROPS */
         , _hoisted_7);
       }), 128
