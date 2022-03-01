@@ -15,6 +15,7 @@
 								<li
 									v-for="conversation in conversations" :key="conversation.id"
 									@click="loadMessages(conversation.id , conversation.customer.id)"
+									:class="userActive && userActive != '' && userActive == conversation.customer.id ? 'bg-gray-200 bg-opacity-50': ''"
 									class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
 										<p class="flex items-center">
 											{{conversation.customer.name}}
@@ -37,7 +38,7 @@
 							</div>
 
 							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 ">
-								<form class="">
+								<form>
 									<div class="rounded-md flex overflow-hidden border-gray-300">
 										<input type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
 										<button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2" type="submit">Enviar</button>
@@ -64,12 +65,14 @@
 			return {
 				conversations : [],
 				messages : [],
+				userActive : ''
 			}
 		},
 		methods: {
 			loadMessages: function (conversationId, userId){
 				axios.get(`/api/messages/${conversationId}/${userId}`).then(response => {
 					this.messages = response.data.messages
+					this.userActive = userId
 				})
 			}
 		},

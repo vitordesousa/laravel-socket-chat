@@ -22885,7 +22885,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       conversations: [],
-      messages: []
+      messages: [],
+      userActive: ''
     };
   },
   methods: {
@@ -22894,6 +22895,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/messages/".concat(conversationId, "/").concat(userId)).then(function (response) {
         _this.messages = response.data.messages;
+        _this.userActive = userId;
       });
     }
   },
@@ -26746,9 +26748,7 @@ var _hoisted_12 = {
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form w-full bg-gray-100 p-6 border-t border-gray-200"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  "class": ""
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "rounded-md flex overflow-hidden border-gray-300"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "text",
@@ -26777,11 +26777,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           onClick: function onClick($event) {
             return _ctx.loadMessages(conversation.id, conversation.customer.id);
           },
-          "class": "p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200"
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_ctx.userActive && _ctx.userActive != '' && _ctx.userActive == conversation.customer.id ? 'bg-gray-200 bg-opacity-50' : '', "p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200"])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(conversation.customer.name) + " ", 1
         /* TEXT */
-        ), _hoisted_9])], 8
-        /* PROPS */
+        ), _hoisted_9])], 10
+        /* CLASS, PROPS */
         , _hoisted_7);
       }), 128
       /* KEYED_FRAGMENT */
