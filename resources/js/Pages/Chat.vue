@@ -32,7 +32,7 @@
 										<p :class="(message.user_id == $page.props.auth.user.id) ? 'messageFromMe' : 'messageToMe'" class="inline-block p-2 rounded-md max-w-7xl">
 											{{message.message}}
 										</p>
-										<span class="block mt-1 text-xs text-gray-500 message-time">{{message.created_at}}</span>
+										<span class="block mt-1 text-xs text-gray-500 message-time">{{message.created_at_formated}}</span>
 								</div>								
 							</div>
 
