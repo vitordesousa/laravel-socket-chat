@@ -64,4 +64,8 @@ class User extends Authenticatable
     public function conversations(){
         return $this->hasMany(Conversation::class, 'emplooyer_id');
     }
+
+    public function group(){
+        return $this->belongsTo(Group::class, 'group_id');
+    }
 }

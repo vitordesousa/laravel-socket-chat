@@ -24,6 +24,12 @@ class PageController extends Controller
 	}
 
 	public function chat(){
-		return Inertia::render('Chat');
+		$user = auth()->user();
+
+		if($user->group->name == 'Administrators'){
+			return Inertia::render('Chat');
+		}
+
+		return Inertia::render('ChatUser');
 	}
 }

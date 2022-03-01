@@ -1,8 +1,8 @@
 <template>
-    <app-layout title="Chat">
+    <app-layout title="Chat User">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Chat
+                Chat User
             </h2>
         </template>
 
@@ -10,22 +10,11 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="flex" style="height: 40rem">
-						<div class="users-list w-3/12 bg-gray-200 bg-opacity-25 border-r border-gray-200 overflow-y-auto">
-							<ul>
-								<li
-									v-for="conversation in conversations" :key="conversation.id"
-									@click="loadMessages(conversation.id , conversation.customer.id)"
-									:class="userActive && userActive != '' && userActive == conversation.customer.id ? 'bg-gray-200 bg-opacity-50': ''"
-									class="p-6 text-lg text-gray-600 leading-7 font-semibold border-b border-gray-200 hover:bg-opacity-50 hover:cursor-pointer hover:bg-gray-200">
-										<p class="flex items-center">
-											{{conversation.customer.name}}
-											<span class="ml-2 w-2 h-2 bg-blue-400 rounded-full"></span>
-										</p>
-								</li>
-							</ul>
-						</div>
-						<div class="conversation w-9/12 flex flex-col justify-between">
-							<div class="w-full p-6 flex flex-col  overflow-y-auto">
+						<div class="conversation w-full flex flex-col justify-between">
+							<div class="title">
+								<h1 class="text-xl p-6">{{headerMessage}}</h1>
+							</div>
+							<div class="w-full p-6 flex flex-col h-full overflow-y-auto">
 								<div 
 									v-for="message in messages" :key="message.id"
 									:class="(message.user_id == $page.props.auth.user.id) ? 'text-right' : ''"
@@ -63,10 +52,9 @@
         },
 		data(){
 			return {
-				conversations : [],
+				headerMessage : 'Aguardando um usuário se conectar ...',
 				messages : [],
 				conversation: '',
-				userActive : '',
 				message : ''
 			}
 		},
@@ -76,22 +64,12 @@
 					document.querySelectorAll('.message:last-child')[0].scrollIntoView()
 				}
 			},
-			async loadMessages(conversationId, userId){
-				await axios.get(`/api/admin/messages/${conversationId}/${userId}`).then(response => {
-					this.messages = response.data.messages
-					this.userActive = userId
-					this.conversation = conversationId
-				})
-
-				this.scrollToBottom()
-			},
-
+			
 			async sendMessage(e){
 				e.preventDefault();
 				
-				await axios.post('/api/admin/messages', {
-					'message' 			:	this.message,
-					'conversation_id'	:	this.conversation
+				await axios.post('/api/panel/messages', {
+					'message' 			:	this.message
 				}).then(response => {
 					this.messages.push(response.data.message)
 					this.message = ''
@@ -100,11 +78,13 @@
 				this.scrollToBottom()
 			},
 		},
-		mounted(){
-
-			axios.get('/api/admin/conversations').then(response => {
-				this.conversations = response.data.conversations
+		async mounted(){
+			await axios.get(`/api/panel/messages`).then(response => {
+				this.messages = response.data.messages
+				this.headerMessage = `Conversa com "${this.messages[0].conversation.emplooyer.name}"`
 			})
+
+			this.scrollToBottom()		
 
 			Echo.private(`user.${this.$page.props.auth.user.id}` ).listen('.SendMessage', (e) => {
 				console.log('e', e)

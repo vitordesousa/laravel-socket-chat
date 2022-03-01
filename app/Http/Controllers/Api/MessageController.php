@@ -31,6 +31,19 @@ class MessageController extends Controller
 		], Response::HTTP_OK);
 	}
 
+	public function user_index(){
+
+		$userLogged = auth()->user();
+
+		$conversation = Conversation::where([ ['customer_id', '=', $userLogged->id], ['status', '<', 2] ])->first();
+
+		$messages = Message::where('conversation_id', $conversation->id)->with(['conversation:id,emplooyer_id', 'conversation.emplooyer:id,name'])->orderBy('created_at')->get();
+
+		return response()->json([
+			'messages' => $messages,
+		], Response::HTTP_OK);
+	}
+
 
 	public function store(MessageStoreRequest $request){
 	   
