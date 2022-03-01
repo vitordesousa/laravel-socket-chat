@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\Chat\SendMessage;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Conversation;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageStoreRequest;
+use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\Response;
 
 class MessageController extends Controller
@@ -44,6 +46,10 @@ class MessageController extends Controller
 			$request['message']	= e($request->message);
 
 			$message = Message::create($request->only('message', 'user_id', 'conversation_id'));
+
+			$to = $conversation->customer_id == $userLogged->id ? $conversation->emplooyer_id : $conversation->customer_id;
+
+			Event::dispatch(new SendMessage($message, $to));
 
 			return response()->json(['message' => $message], Response::HTTP_OK);
 
