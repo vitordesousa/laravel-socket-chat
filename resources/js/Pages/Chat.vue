@@ -29,7 +29,7 @@
 								<div 
 									v-for="message in messages" :key="message.id"
 									:class="(message.user_id == $page.props.auth.user.id) ? 'text-right' : ''"
-									class="w-full mb-3">
+									class="w-full mb-3 message">
 										<p :class="(message.user_id == $page.props.auth.user.id) ? 'messageFromMe' : 'messageToMe'" class="inline-block p-2 rounded-md max-w-7xl">
 											{{message.message}}
 										</p>
@@ -41,7 +41,7 @@
 								<form v-on:submit.prevent="sendMessage">
 									<div class="rounded-md flex overflow-hidden border-gray-300">
 										<input v-model="message" type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
-										<button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2" type="submit">Enviar</button>
+										<button class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 disabled:cursor-not-allowed" type="submit" :disabled="this.message == ''">Enviar</button>
 									</div>
 								</form>
 							</div>
@@ -71,24 +71,33 @@
 			}
 		},
 		methods: {
-			loadMessages: function (conversationId, userId){
-				axios.get(`/api/messages/${conversationId}/${userId}`).then(response => {
+			scrollToBottom(){
+				if(this.messages.length > 0){
+					document.querySelectorAll('.message:last-child')[0].scrollIntoView()
+				}
+			},
+			async loadMessages(conversationId, userId){
+				await axios.get(`/api/messages/${conversationId}/${userId}`).then(response => {
 					this.messages = response.data.messages
 					this.userActive = userId
 					this.conversation = conversationId
 				})
+
+				this.scrollToBottom()
 			},
 
-			sendMessage(e){
+			async sendMessage(e){
 				e.preventDefault();
 				
-				axios.post('/api/messages', {
+				await axios.post('/api/messages', {
 					'message' 			:	this.message,
 					'conversation_id'	:	this.conversation
 				}).then(response => {
 					this.messages.push(response.data.message)
 					this.message = ''
 				})
+
+				this.scrollToBottom()
 			},
 		},
 		mounted(){
