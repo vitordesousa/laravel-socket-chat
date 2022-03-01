@@ -37,7 +37,7 @@
 								</div>								
 							</div>
 
-							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 ">
+							<div class="form w-full bg-gray-100 p-6 border-t border-gray-200 " v-show="userActive != ''">
 								<form>
 									<div class="rounded-md flex overflow-hidden border-gray-300">
 										<input type="text" name="message" class="flex-1 px-4 py-2 text-sm focus:outiline-none">
